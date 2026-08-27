@@ -32,29 +32,38 @@ picker.
   detection only. Runtime variables and non-literal expressions are
   intentionally not resolved.
 
-## Requirements
+## Install
 
-- VS Code `^1.85.0`
-- Node.js 18+ and npm (for building from source)
+**Recommended: download the prebuilt release.**
 
-## Getting started (from source)
+1. Go to the [Releases page](https://github.com/LukasRuee/imColor/releases) and download the `.vsix` file from the latest release.
+2. In VS Code: **Extensions view (`Ctrl+Shift+X`) → `...` menu → Install from VSIX...** → select the downloaded file.
 
+This isn't published to the Marketplace, so VS Code won't auto-update it — check the Releases page for new versions and reinstall the `.vsix` when one comes out.
+
+## Building from source
+
+**Needed Tools:**
+- Node.js 18+
+- npm
+- vsce
+
+Useful if you want to modify the extension, debug it, or build a version newer than the latest release.
+
+1. Pull source from git
+2. Open folder "imgui-colorswatch"
+3. If npn is not installed: Open bash and write:
 ```bash
 npm install
 npm run compile
 ```
-
-Then press **F5** in VS Code (with this folder open) to launch an Extension
-Development Host. The launch config opens the `sample/` folder automatically
-so you can see swatches immediately in `sample/sample_colors.cpp`.
-
-To package a `.vsix` for manual installation:
-
+4. If vsce is not installed: Open bash and write:
 ```bash
 npm install -g @vscode/vsce   # if you don't already have vsce
 npm run package
 ```
 
+This creates your own `.vsix` package.
 Then in VS Code: **Extensions view → "..." menu → Install from VSIX...**
 
 ## Running the tests
@@ -132,21 +141,3 @@ C/C++ AST.
   with interleaved comments) are supported by the regex (`\s` matches
   newlines) but haven't been stress-tested beyond the multi-line case in
   `test/parser.test.ts`.
-
-## Project layout
-
-```
-package.json          Extension manifest, contributed settings, npm scripts
-tsconfig.json
-src/
-  extension.ts         Activation: wires up the color provider + decorations
-  parser.ts             Regex-based ImVec4 detection (no vscode dependency)
-  colorProvider.ts       DocumentColorProvider: native swatch + picker + edits
-  decorations.ts          Inline swatch decorations, incremental scanning
-  globs.ts                 Tiny glob matcher for detectRanges
-test/
-  parser.test.ts       Mocha unit tests for parser.ts
-sample/
-  sample_colors.cpp   Example ImGui usage covering every supported pattern
-  imgui.h              Minimal stand-in ImVec4/ImGui declarations
-```
