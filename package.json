@@ -1,0 +1,96 @@
+{
+  "name": "imgui-colorswatch",
+  "displayName": "ImGui Color Swatch",
+  "description": "Inline color swatches and a live color picker for ImGui ImVec4(...) literals in C/C++ source files.",
+  "version": "0.1.0",
+  "publisher": "LukasRuee",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LukasRuee/imColor"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "imgui",
+    "imvec4",
+    "color",
+    "swatch",
+    "c++"
+  ],
+  "activationEvents": [
+    "onLanguage:c",
+    "onLanguage:cpp"
+  ],
+  "main": "./out/src/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "ImGui Color Swatch",
+      "properties": {
+        "imvec4Color.showInlineSwatch": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show an inline color swatch next to detected ImVec4(...) literals. When disabled, detection still runs but no swatch is rendered."
+        },
+        "imvec4Color.updateFormat": {
+          "type": "string",
+          "enum": [
+            "preserve",
+            "float",
+            "int"
+          ],
+          "enumDescriptions": [
+            "Keep whatever numeric style (0.0-1.0 floats or 0-255 ints) the original literal used.",
+            "Always rewrite edited literals as 0.0-1.0 floats (e.g. 0.50f).",
+            "Always rewrite edited literals as 0-255 integers."
+          ],
+          "default": "preserve",
+          "description": "Numeric format to use when the color picker writes a value back into an ImVec4 literal."
+        },
+        "imvec4Color.showAlpha": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include the alpha (w) component in the swatch and color picker. When disabled, swatches are rendered fully opaque and alpha is left untouched on edit."
+        },
+        "imvec4Color.showCheckeredTransparency": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show a checkered background behind swatches with alpha < 1 so transparency is visible (uses VS Code's native color swatch, which already does this)."
+        },
+        "imvec4Color.detectRanges": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "**/*.c",
+            "**/*.cpp",
+            "**/*.h",
+            "**/*.hpp"
+          ],
+          "description": "Glob patterns for files in which ImVec4 literals should be detected."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js || mocha out/test/*.test.js",
+    "package": "npx @vscode/vsce package"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "mocha": "^10.3.0",
+    "typescript": "^5.4.0"
+  }
+}
