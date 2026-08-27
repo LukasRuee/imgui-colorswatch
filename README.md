@@ -5,8 +5,6 @@ A lightweight VS Code extension that shows an inline color swatch next to
 and C++ source, and lets you edit them in place with VS Code's native color
 picker.
 
-Repo: https://github.com/LukasRuee/imColor
-
 ## Features
 
 - Detects `ImVec4` literals in three common forms:
